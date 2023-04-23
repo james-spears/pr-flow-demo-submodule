@@ -35,11 +35,11 @@ jobs:
         run: |
           git config --global user.name '🤖'
           git config --global user.email '🤖'
-      - name: Bump version
-        id: version-bump
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Bump version
+      #   id: version-bump
+      #   uses: actions/checkout@v3
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version
         run: echo "version=$(npm version prerelease -m 'Bump version v%s [skip ci]')" >> $GITHUB_ENV
@@ -80,8 +80,7 @@ jobs:
         shell: bash
         run: |
           git fetch -a
-          git fetch --tags
-          echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
       - name: Create release
         uses: "actions/github-script@v6"
