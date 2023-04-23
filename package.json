@@ -2,7 +2,6 @@
   "name": "@jameswspears/pr-flow-demo-api",
   "description": "",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
