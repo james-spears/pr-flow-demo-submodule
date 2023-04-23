@@ -1,7 +1,7 @@
 {
   "name": "@jameswspears/pr-flow-demo-submodule",
   "description": "",
-  "version": "0.0.4",
+  "version": "0.0.5-2",
   "private": true,
   "type": "module",
   "main": "./dist/index.js",
