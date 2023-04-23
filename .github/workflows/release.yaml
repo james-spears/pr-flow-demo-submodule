@@ -80,6 +80,7 @@ jobs:
         shell: bash
         run: |
           git fetch -a
+          git fetch --tags
           echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - name: Create release
