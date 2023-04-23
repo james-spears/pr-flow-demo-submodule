@@ -35,9 +35,19 @@ jobs:
         run: |
           git config --global user.name '🤖'
           git config --global user.email '🤖'
+      - name: Bump version
+        id: version-bump
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version
         run: echo "version=$(npm version prerelease -m 'Bump version v%s [skip ci]')" >> $GITHUB_ENV
+
+      - name: Push code
+        run: |
+          git push
+          git push --tags
 
       - name: Install deps
         run: npm ci
@@ -52,11 +62,6 @@ jobs:
           path: |
             dist
             package*.json
-
-      - name: Push code
-        run: |
-          git push
-          git push --tags
 
   create-release:
     needs: bump-version
