@@ -99,7 +99,7 @@ jobs:
             }
 
   deploy:
-    needs: build
+    needs: create-release
     runs-on: ubuntu-latest
     steps:
       - name: Staging deploy
