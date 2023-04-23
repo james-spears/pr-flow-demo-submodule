@@ -36,12 +36,6 @@ jobs:
           git config --global user.name '🤖'
           git config --global user.email '🤖'
 
-      - name: Install deps
-        run: npm ci
-
-      - name: Build code
-        run: npm run build
-
       - name: Bump version
         run: echo "version=$(npm version patch -m 'Bump version v%s [skip ci]')" >> $GITHUB_ENV
 
