@@ -6,7 +6,7 @@ describe("API Integration Test", () => {
   it("should return ids", (done) => {
     const items: unknown[] = [];
 
-    request("http://localhost:3000")
+    request("http://127.0.0.1:3000")
       .get("/api/v1/value")
       .end(function (err, res) {
         expect(err).toBeNull();

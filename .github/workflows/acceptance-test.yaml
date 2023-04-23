@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Cache node modules
+      - name: Cache npm
         id: cache-npm
         uses: actions/cache@v3
         env:
@@ -40,15 +40,15 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install dependencies
+      - name: Install deps
         run: npm ci
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Check Code Standards
+      - name: Check code
         run: npm run check
 
-      - name: Unit Test
+      - name: Unit test
         run: |
           npm run test:unit
 
@@ -61,23 +61,23 @@ jobs:
           role-to-assume: arn:aws:iam::989966476585:role/ci
           aws-region: us-east-1
 
-      - name: Build Lambdas
+      - name: Build code
         run: |
           npm run build
 
-      - name: Start SAM Local
+      - name: Start app
         run: |
           npm run start:ci --network=${{ job.container.network }}
 
-      - name: Seed the Database
+      - name: Seed database
         run: |
           node ./seed.mjs
 
-      - name: Integration Test
+      - name: Integration test
         run: |
           npm run test:integration
 
-      - name: Archive SAM log
+      - name: Archive log
         uses: actions/upload-artifact@v3
         with:
           name: sam-log
