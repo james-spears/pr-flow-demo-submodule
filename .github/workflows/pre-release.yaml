@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup node
+      - name: Setup
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
 
-      - name: Cache node modules
+      - name: Cache
         id: cache-npm
         uses: actions/cache@v3
         env:
@@ -31,21 +31,21 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Git config
+      - name: Config
         run: |
           git config --global user.name '🤖'
           git config --global user.email '🤖'
 
-      - name: Install Deps
+      - name: Bump
+        run: echo "version=$(npm version prerelease -m 'Bump version v%s [skip ci]')" >> $GITHUB_ENV
+
+      - name: Install
         run: npm ci
 
-      - name: Build Lambdas
+      - name: Build
         run: npm run build
 
-      - name: Bump prepatch version
-        run: echo "version=$(npm version prerelease -m 'Bump version v%s [skip ci]')" >> $GITHUB_ENV
-        
-      - name: Archive build artifacts
+      - name: Archive
         uses: actions/upload-artifact@v3
         with:
           name: dist
@@ -53,11 +53,7 @@ jobs:
             dist
             package*.json
 
-      - run: npm publish
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Git Push
+      - name: Push
         run: |
           git push
           git push --tags
@@ -66,10 +62,10 @@ jobs:
     needs: bump-version
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup node
+      - name: Setup
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
